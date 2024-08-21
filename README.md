@@ -28,37 +28,45 @@ with benchmarking and visualization tooling.
 
 ## Getting Started
 
-1. Install the [MAX SDK](https://modul.ar/get-started) (also see for the
-   system requirements).
+MAX is available in both stable and nightly builds. To install either version,
+follow the guide to [install the MAX SDK](https://modul.ar/get-started) (also
+see for the system requirements).
 
-2. Git clone the repository of MAX samples using the command below:
+Then clone this repository:
 
 ```bash
 git clone https://github.com/modularml/max.git
 ```
 
-## Running
+If you installed the nightly build, be sure you switch to the `nightly` branch,
+because the `main` branch is for stable releases and might not be compatible
+with nightly builds:
 
-### Option 1: Example console (excludes notebooks)
-
-Run the console and follow the prompt to choose which example to run.
-
-```sh
-python3 -m venv venv && source venv/bin/activate
-python3 -m pip install --find-links "$(modular config max.path)/wheels" max-engine
-python3 examples/console.py
+```bash
+git checkout nightly
 ```
 
-which opens up
+## Running
 
-<p align="center">
-    <img src="https://modular-assets.s3.amazonaws.com/images/modular_console_bg.png">
-</p>
+### MAX Pipelines
 
-### Option 2: Follow the README
+To show off the full power of MAX, a
+[series of end-to-end pipelines for common AI workloads](./examples/graph-api/pipelines/)
+(and more) are ready to run. As one example, this includes everything needed to
+self-host
+[the Llama 3 text-generation model](./examples/graph-api/pipelines/llama3/).
+These pipelines are completely written in Mojo, and all code is provided so
+that they can be customized, built upon, or learned from.
 
-Follow the instructions in the README for each example, notebook or tool
-you want to run.
+### Examples
+
+In addition to the end-to-end pipelines, there are many [examples](./examples/)
+that exercise various aspects of MAX, from
+[performing inference using PyTorch and ONNX models](./examples/inference/) to
+[demonstrating command-line tooling capabilities](./examples/tools/).
+
+You can follow the instructions in the README for each example,
+notebook or tool you want to run.
 
 ### Notebooks
 
@@ -67,6 +75,12 @@ Check out the [notebooks examples](./examples/notebooks/) for using MAX Engine
 
 - [Mistral-7B](./examples/notebooks/mistral7b-python-onnx.ipynb)
 - [Roberta-pytorch](./examples/notebooks/roberta-python-pytorch.ipynb)
+
+### Tutorials
+
+The [tutorials](./tutorials/) directory contains the "finished" code for
+tutorials you can read at
+[docs.modular.com/max/tutorials](https://docs.modular.com/max/tutorials).
 
 ### FAQ
 

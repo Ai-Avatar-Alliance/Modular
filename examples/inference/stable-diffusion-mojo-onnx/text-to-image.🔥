@@ -17,10 +17,10 @@ import random
 
 from collections import List
 from python import Python
-from max.engine import InferenceSession, Model, SessionOptions
-from tensor import randn, Tensor, TensorShape, TensorSpec
 from random import seed
-from math import sqrt
+
+from max.engine import InferenceSession
+from tensor import Tensor, TensorShape, TensorSpec
 
 # Local Mojo imports
 import python_utils
@@ -52,8 +52,10 @@ def vstack[
     out = Tensor[dtype](TensorShape(out_shape))
 
     # Fill data.
-    memcpy(out.data(), a.data(), a.num_elements())
-    memcpy(out.data() + a.num_elements(), b.data(), b.num_elements())
+    memcpy(out.unsafe_ptr(), a.unsafe_ptr(), a.num_elements())
+    memcpy(
+        out.unsafe_ptr() + a.num_elements(), b.unsafe_ptr(), b.num_elements()
+    )
     return out
 
 
@@ -68,8 +70,8 @@ def split[dtype: DType](borrowed x: Tensor[dtype], i: Int) -> Tensor[dtype]:
     ret = Tensor[dtype](TensorShape(shape))
     # Fill data
     memcpy(
-        ret.data(),
-        x.data() + (x.num_elements() // 2) * i,
+        ret.unsafe_ptr(),
+        x.unsafe_ptr() + (x.num_elements() // 2) * i,
         x.num_elements() // 2,
     )
     return ret
@@ -166,7 +168,7 @@ def main():
 
     # Note: For onnx, shapes are given in NCHW format.
     latent = (
-        randn[DType.float32](
+        Tensor[DType.float32].randn(
             TensorShape(1, LATENT_CHANNELS, LATENT_HEIGHT, LATENT_WIDTH)
         )
         * Scheduler.init_noise_sigma
